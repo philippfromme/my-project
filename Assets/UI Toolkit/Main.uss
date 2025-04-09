@@ -1,0 +1,8 @@
+.header {
+    font-size: 40px;
+    -unity-font: url("project://database/Assets/UnityTechnologies/EffectExamples/Shared/Fonts/RobotoCondensed-Bold.ttf?fileID=12800000&guid=fae067962e5934395be31c8aba4a3455&type=3#RobotoCondensed-Bold");
+    -unity-text-outline-color: rgba(255, 255, 255, 0);
+    -unity-text-outline-width: 0;
+    -unity-font-style: bold-and-italic;
+    left: 20px;
+}

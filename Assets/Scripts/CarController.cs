@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class CarController : MonoBehaviour
 {
@@ -30,6 +31,7 @@ public class CarController : MonoBehaviour
     public float slipAngle;
 
     public float speed;
+    public float speedKmh; // Speed in km/h
 
     public float maxSpeed = 200f; // Maximum speed in km/h
     public float dragMultiplier = 0.5f; // Adjust drag near max speed
@@ -37,6 +39,11 @@ public class CarController : MonoBehaviour
     public float drag;
 
     public AnimationCurve steeringCurve;
+
+    // Events
+    [System.Serializable]
+    public class SpeedEvent : UnityEvent<int> { }
+    public SpeedEvent OnSpeedUpdated;
 
     void Start()
     {
@@ -107,7 +114,7 @@ public class CarController : MonoBehaviour
 
     void Update()
     {
-        // speed = rb.velocity.magnitude * 3.6f; // Convert to km/h
+        speedKmh = rb.velocity.magnitude * 3.6f; // Speed in km/h
         speed = rb.velocity.magnitude; // Speed in m/s
 
         CheckInput();
@@ -116,6 +123,10 @@ public class CarController : MonoBehaviour
         ApplyBrake();
         CheckWheelSlip();
         UpdateWheels();
+
+        int speedKmhInt = Mathf.FloorToInt(speedKmh);
+
+        OnSpeedUpdated?.Invoke(speedKmhInt);
     }
 
     void FixedUpdate() {
@@ -144,8 +155,10 @@ public class CarController : MonoBehaviour
     void ApplySteering() {
         float steeringAngle = steeringInput * steeringCurve.Evaluate(speed);
 
-        steeringAngle += Vector3.SignedAngle(transform.forward, rb.velocity, transform.up) * steeringAssistFactor; // Adjust steering angle based on velocity direction
-        steeringAngle = Mathf.Clamp(steeringAngle, -maxSteeringAngle, maxSteeringAngle); // Limit steering angle
+        if (speed > 1f) {
+            steeringAngle += Vector3.SignedAngle(transform.forward, rb.velocity, transform.up) * steeringAssistFactor; // Adjust steering angle based on velocity direction
+            steeringAngle = Mathf.Clamp(steeringAngle, -maxSteeringAngle, maxSteeringAngle); // Limit steering angle
+        }
 
         wheelColliders.frontLeftWheelCollider.steerAngle = steeringAngle;
         wheelColliders.frontRightWheelCollider.steerAngle = steeringAngle;
