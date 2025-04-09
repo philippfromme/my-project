@@ -4,4 +4,10 @@
         <ui:Label tabindex="-1" text="Speed:" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Speed" class="header" />
         <ui:Label tabindex="-1" text="Slip angle:" parse-escape-sequences="true" display-tooltip-when-elided="true" name="SlipAngle" class="header" />
     </ui:VisualElement>
+    <ui:VisualElement name="WheelSlipStatus" style="flex-grow: initial; width: 200px; height: 300px; justify-content: flex-start; position: relative; bottom: auto;">
+        <ui:VisualElement name="FrontLeft" style="flex-grow: 1; background-color: rgb(0, 255, 0); position: absolute; left: 10px; top: 10px; width: 20px; height: 80px;" />
+        <ui:VisualElement name="FrontRight" style="flex-grow: 1; background-color: rgb(0, 255, 0); position: absolute; left: 80px; width: 20px; height: 80px; top: 10px;" />
+        <ui:VisualElement name="BackLeft" style="flex-grow: 1; background-color: rgb(0, 255, 0); position: absolute; left: 10px; top: 200px; width: 20px; height: 80px;" />
+        <ui:VisualElement name="BackRight" style="flex-grow: 1; background-color: rgb(0, 255, 0); position: absolute; left: 80px; width: 20px; height: 80px; top: 200px;" />
+    </ui:VisualElement>
 </ui:UXML>

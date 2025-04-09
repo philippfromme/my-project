@@ -907,7 +907,7 @@ Transform:
   m_GameObject: {fileID: 94833279}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -16.25, y: -1, z: 80}
+  m_LocalPosition: {x: -16, y: -1, z: 80}
   m_LocalScale: {x: 16, y: 1, z: 16}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1396,7 +1396,7 @@ Transform:
   m_GameObject: {fileID: 147290406}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -16.25, y: -1, z: 96}
+  m_LocalPosition: {x: -16, y: -1, z: 96}
   m_LocalScale: {x: 16, y: 1, z: 16}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4277,7 +4277,7 @@ Transform:
   m_GameObject: {fileID: 292367471}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.25, y: -1, z: 80}
+  m_LocalPosition: {x: 0, y: -1, z: 80}
   m_LocalScale: {x: 16, y: 1, z: 16}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -12302,6 +12302,11 @@ MonoBehaviour:
     frontLeftWheelParticles: {fileID: 0}
     backRightWheelParticles: {fileID: 0}
     backLeftWheelParticles: {fileID: 0}
+  wheelSlipStatus:
+    frontRightWheelSlipping: 0
+    frontLeftWheelSlipping: 0
+    backRightWheelSlipping: 0
+    backLeftWheelSlipping: 0
   wheelParticlePrefab: {fileID: 4908321209355608405, guid: 37fda0c193d23ba4e99b302ff4d402ca, type: 3}
   gasInput: 0
   brakeInput: 0
@@ -12347,6 +12352,36 @@ MonoBehaviour:
       - m_Target: {fileID: 1605931791}
         m_TargetAssemblyTypeName: Main, Assembly-CSharp
         m_MethodName: UpdateSpeed
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnSlipAngleUpdated:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1605931791}
+        m_TargetAssemblyTypeName: Main, Assembly-CSharp
+        m_MethodName: UpdateSlipAngle
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnWheelSlipStatusUpdated:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1605931791}
+        m_TargetAssemblyTypeName: Main, Assembly-CSharp
+        m_MethodName: UpdateWheelSlipStatus
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -13922,7 +13957,7 @@ Transform:
   m_GameObject: {fileID: 1030037185}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -16.25, y: -1, z: 64}
+  m_LocalPosition: {x: -16, y: -1, z: 64}
   m_LocalScale: {x: 16, y: 1, z: 16}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -25290,7 +25325,7 @@ Transform:
   m_GameObject: {fileID: 1865120074}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.25, y: -1, z: 48}
+  m_LocalPosition: {x: 0, y: -1, z: 48}
   m_LocalScale: {x: 16, y: 1, z: 16}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -26180,7 +26215,7 @@ Transform:
   m_GameObject: {fileID: 1975249277}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.25, y: -1, z: 64}
+  m_LocalPosition: {x: 0, y: -1, z: 64}
   m_LocalScale: {x: 16, y: 1, z: 16}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -27925,7 +27960,7 @@ Transform:
   m_GameObject: {fileID: 2072015844}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -16.25, y: -1, z: 48}
+  m_LocalPosition: {x: -16, y: -1, z: 48}
   m_LocalScale: {x: 16, y: 1, z: 16}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -28249,7 +28284,7 @@ Transform:
   m_GameObject: {fileID: 2076914127}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.25, y: -1, z: 96}
+  m_LocalPosition: {x: 0, y: -1, z: 96}
   m_LocalScale: {x: 16, y: 1, z: 16}
   m_ConstrainProportionsScale: 0
   m_Children: []

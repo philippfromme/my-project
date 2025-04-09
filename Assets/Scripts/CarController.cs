@@ -10,6 +10,7 @@ public class CarController : MonoBehaviour
     public WheelColliders wheelColliders;
     public WheelMeshes wheelMeshes;
     public WheelParticles wheelParticles;
+    public WheelSlipStatus wheelSlipStatus;
 
     public GameObject wheelParticlePrefab;
 
@@ -38,12 +39,22 @@ public class CarController : MonoBehaviour
 
     public float drag;
 
+    public float slipThreshold = 0.1f; // Adjust this value to control the slip threshold for particle effects
+
     public AnimationCurve steeringCurve;
 
     // Events
     [System.Serializable]
     public class SpeedEvent : UnityEvent<int> { }
     public SpeedEvent OnSpeedUpdated;
+
+    [System.Serializable]
+    public class SlipAngleEvent : UnityEvent<int> { }
+    public SlipAngleEvent OnSlipAngleUpdated;
+
+    [System.Serializable]
+    public class WheelSlipStatusEvent : UnityEvent<WheelSlipStatus> { }
+    public WheelSlipStatusEvent OnWheelSlipStatusUpdated;
 
     void Start()
     {
@@ -81,34 +92,45 @@ public class CarController : MonoBehaviour
         wheelColliders.backRightWheelCollider.GetGroundHit(out wheelHits[2]);
         wheelColliders.backLeftWheelCollider.GetGroundHit(out wheelHits[3]);
 
-        float slipThreshold = 0.1f; // Adjust this value to control the slip threshold
+        Debug.DrawRay(wheelHits[0].point, wheelHits[0].sidewaysSlip * Vector3.right, Color.red);
+        Debug.DrawRay(wheelHits[0].point, wheelHits[0].forwardSlip * Vector3.forward, Color.blue);
+        Debug.DrawRay(wheelHits[1].point, wheelHits[1].sidewaysSlip * Vector3.right, Color.red);
+        Debug.DrawRay(wheelHits[1].point, wheelHits[1].forwardSlip * Vector3.forward, Color.blue);
+        Debug.DrawRay(wheelHits[2].point, wheelHits[2].sidewaysSlip * Vector3.right, Color.red);
+        Debug.DrawRay(wheelHits[2].point, wheelHits[2].forwardSlip * Vector3.forward, Color.blue);
+        Debug.DrawRay(wheelHits[3].point, wheelHits[3].sidewaysSlip * Vector3.right, Color.red);
+        Debug.DrawRay(wheelHits[3].point, wheelHits[3].forwardSlip * Vector3.forward, Color.blue);
 
         if (Mathf.Abs(wheelHits[0].sidewaysSlip) + Mathf.Abs(wheelHits[0].forwardSlip) > slipThreshold) {
             wheelParticles.frontRightWheelParticles.Play();
+            wheelSlipStatus.frontRightWheelSlipping = true;
         } else {
             wheelParticles.frontRightWheelParticles.Stop();
+            wheelSlipStatus.frontRightWheelSlipping = false;
         }
 
         if (Mathf.Abs(wheelHits[1].sidewaysSlip) + Mathf.Abs(wheelHits[1].forwardSlip) > slipThreshold) {
             wheelParticles.frontLeftWheelParticles.Play();
+            wheelSlipStatus.frontLeftWheelSlipping = true;
         } else {
             wheelParticles.frontLeftWheelParticles.Stop();
+            wheelSlipStatus.frontLeftWheelSlipping = false;
         }
 
         if (Mathf.Abs(wheelHits[2].sidewaysSlip) + Mathf.Abs(wheelHits[2].forwardSlip) > slipThreshold) {
-            Debug.Log("Back right wheel slip detected: " + wheelHits[2].sidewaysSlip + ", " + wheelHits[2].forwardSlip);
             wheelParticles.backRightWheelParticles.Play();
+            wheelSlipStatus.backRightWheelSlipping = true;
         } else {
-            Debug.Log("Back right wheel slip not detected: " + wheelHits[2].sidewaysSlip + ", " + wheelHits[2].forwardSlip);
             wheelParticles.backRightWheelParticles.Stop();
+            wheelSlipStatus.backRightWheelSlipping = false;
         }
 
         if (Mathf.Abs(wheelHits[3].sidewaysSlip) + Mathf.Abs(wheelHits[3].forwardSlip) > slipThreshold) {
-            Debug.Log("Back left wheel slip detected: " + wheelHits[3].sidewaysSlip + ", " + wheelHits[3].forwardSlip);
             wheelParticles.backLeftWheelParticles.Play();
+            wheelSlipStatus.backLeftWheelSlipping = true;
         } else {
-            Debug.Log("Back left wheel slip not detected: " + wheelHits[3].sidewaysSlip + ", " + wheelHits[3].forwardSlip);
             wheelParticles.backLeftWheelParticles.Stop();
+            wheelSlipStatus.backLeftWheelSlipping = false;
         }
     }
 
@@ -127,6 +149,16 @@ public class CarController : MonoBehaviour
         int speedKmhInt = Mathf.FloorToInt(speedKmh);
 
         OnSpeedUpdated?.Invoke(speedKmhInt);
+
+        int slipAngleInt = Mathf.FloorToInt(slipAngle);
+
+        if (speed < 1f) {
+            slipAngleInt = 0; // Reset slip angle when speed is low
+        }
+
+        OnSlipAngleUpdated?.Invoke(slipAngleInt); // Update slip angle event
+
+        OnWheelSlipStatusUpdated?.Invoke(wheelSlipStatus); // Update wheel slip status event
     }
 
     void FixedUpdate() {
@@ -217,3 +249,21 @@ public class WheelParticles {
     public ParticleSystem backRightWheelParticles;
     public ParticleSystem backLeftWheelParticles;
 }
+
+[System.Serializable]
+public class WheelSlipStatus {
+    public bool frontRightWheelSlipping;
+    public bool frontLeftWheelSlipping;
+    public bool backRightWheelSlipping;
+    public bool backLeftWheelSlipping;
+
+    public override string ToString()
+    {
+        return $"Wheel Slip Status:\n" +
+               $"- Front Right: {frontRightWheelSlipping}\n" +
+               $"- Front Left: {frontLeftWheelSlipping}\n" +
+               $"- Back Right: {backRightWheelSlipping}\n" +
+               $"- Back Left: {backLeftWheelSlipping}";
+    }
+}
+
