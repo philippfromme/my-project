@@ -207,6 +207,15 @@ public class CarController : MonoBehaviour
         } else {
             brakeInput = 0;
         }
+
+        // apply handbrake
+        if (Input.GetKey(KeyCode.Space)) {
+            brakeInput = 1f;
+
+            gasInput = 0f;
+        } else {
+            brakeInput = 0f;
+        }
     }
 
     void UpdateWheels() {
