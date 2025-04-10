@@ -70,18 +70,22 @@ public class CarController : MonoBehaviour
         wheelParticles.frontRightWheelParticles =
             Instantiate(wheelParticlePrefab, wheelColliders.frontRightWheelCollider.transform.position, Quaternion.identity, wheelColliders.frontRightWheelCollider.transform)
             .GetComponent<ParticleSystem>();
+        wheelParticles.frontRightWheelParticles.transform.rotation = Quaternion.Euler(-90f, 0f, 0f); // Rotate the particle system to face the wheel
 
         wheelParticles.frontLeftWheelParticles =
             Instantiate(wheelParticlePrefab, wheelColliders.frontLeftWheelCollider.transform.position, Quaternion.identity, wheelColliders.frontLeftWheelCollider.transform)
             .GetComponent<ParticleSystem>();
+        wheelParticles.frontLeftWheelParticles.transform.rotation = Quaternion.Euler(-90f, 0f, 0f); // Rotate the particle system to face the wheel
 
         wheelParticles.backRightWheelParticles =
             Instantiate(wheelParticlePrefab, wheelColliders.backRightWheelCollider.transform.position, Quaternion.identity, wheelColliders.backRightWheelCollider.transform )
             .GetComponent<ParticleSystem>();
+        wheelParticles.backRightWheelParticles.transform.rotation = Quaternion.Euler(-90f, 0f, 0f); // Rotate the particle system to face the wheel
 
         wheelParticles.backLeftWheelParticles =
             Instantiate(wheelParticlePrefab, wheelColliders.backLeftWheelCollider.transform.position, Quaternion.identity, wheelColliders.backLeftWheelCollider.transform)
             .GetComponent<ParticleSystem>();
+        wheelParticles.backLeftWheelParticles.transform.rotation = Quaternion.Euler(-90f, 0f, 0f); // Rotate the particle system to face the wheel
     }
 
     void CheckWheelSlip() {
@@ -102,34 +106,58 @@ public class CarController : MonoBehaviour
         Debug.DrawRay(wheelHits[3].point, wheelHits[3].forwardSlip * Vector3.forward, Color.blue);
 
         if (Mathf.Abs(wheelHits[0].sidewaysSlip) + Mathf.Abs(wheelHits[0].forwardSlip) > slipThreshold) {
-            wheelParticles.frontRightWheelParticles.Play();
+            if (!wheelParticles.frontRightWheelParticles.isPlaying) {
+                wheelParticles.frontRightWheelParticles.Play();
+            }
+
             wheelSlipStatus.frontRightWheelSlipping = true;
         } else {
-            wheelParticles.frontRightWheelParticles.Stop();
+            if (wheelParticles.frontRightWheelParticles.isPlaying) {
+                wheelParticles.frontRightWheelParticles.Stop();
+            }
+
             wheelSlipStatus.frontRightWheelSlipping = false;
         }
 
         if (Mathf.Abs(wheelHits[1].sidewaysSlip) + Mathf.Abs(wheelHits[1].forwardSlip) > slipThreshold) {
-            wheelParticles.frontLeftWheelParticles.Play();
+            if (!wheelParticles.frontLeftWheelParticles.isPlaying) {
+                wheelParticles.frontLeftWheelParticles.Play();
+            }
+
             wheelSlipStatus.frontLeftWheelSlipping = true;
         } else {
-            wheelParticles.frontLeftWheelParticles.Stop();
+            if (wheelParticles.frontLeftWheelParticles.isPlaying) {
+                wheelParticles.frontLeftWheelParticles.Stop();
+            }
+
             wheelSlipStatus.frontLeftWheelSlipping = false;
         }
 
         if (Mathf.Abs(wheelHits[2].sidewaysSlip) + Mathf.Abs(wheelHits[2].forwardSlip) > slipThreshold) {
-            wheelParticles.backRightWheelParticles.Play();
+            if (!wheelParticles.backRightWheelParticles.isPlaying) {
+                wheelParticles.backRightWheelParticles.Play();
+            }
+
             wheelSlipStatus.backRightWheelSlipping = true;
         } else {
-            wheelParticles.backRightWheelParticles.Stop();
+            if (wheelParticles.backRightWheelParticles.isPlaying) {
+                wheelParticles.backRightWheelParticles.Stop();
+            }
+
             wheelSlipStatus.backRightWheelSlipping = false;
         }
 
         if (Mathf.Abs(wheelHits[3].sidewaysSlip) + Mathf.Abs(wheelHits[3].forwardSlip) > slipThreshold) {
-            wheelParticles.backLeftWheelParticles.Play();
+            if (!wheelParticles.backLeftWheelParticles.isPlaying) {
+                wheelParticles.backLeftWheelParticles.Play();
+            }
+
             wheelSlipStatus.backLeftWheelSlipping = true;
         } else {
-            wheelParticles.backLeftWheelParticles.Stop();
+            if (wheelParticles.backLeftWheelParticles.isPlaying) {
+                wheelParticles.backLeftWheelParticles.Stop();
+            }
+
             wheelSlipStatus.backLeftWheelSlipping = false;
         }
     }
