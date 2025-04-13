@@ -34,6 +34,10 @@ public class CarController : MonoBehaviour
     public float speed;
     public float speedKmh; // Speed in km/h
 
+    public float frontWheelRPM = 0f;
+    public float rearWheelRPM = 0f;
+    public float maxWheelRPM = 3000f; // Maximum wheel RPM
+
     public float maxSpeedKmh = 50f; // Maximum speed in km/h
     public float dragMultiplier = 0.5f; // Adjust drag near max speed
 
@@ -190,8 +194,8 @@ public class CarController : MonoBehaviour
 
         // Debug.Log($"GAS: {gasInput}, BRAKE: {brakeInput}, STEERING: {steeringInput}, SLIP ANGLE: {slipAngleInt}°");
 
-        float frontWheelRPM = (wheelColliders.frontLeftWheelCollider.rpm + wheelColliders.frontRightWheelCollider.rpm) / 2f;        
-        float rearWheelRPM = (wheelColliders.backLeftWheelCollider.rpm + wheelColliders.backRightWheelCollider.rpm) / 2f;
+        frontWheelRPM = (wheelColliders.frontLeftWheelCollider.rpm + wheelColliders.frontRightWheelCollider.rpm) / 2f;        
+        rearWheelRPM = (wheelColliders.backLeftWheelCollider.rpm + wheelColliders.backRightWheelCollider.rpm) / 2f;
 
         bool rearWheelsSlipping = wheelSlipStatus.backLeftWheelSlipping || wheelSlipStatus.backRightWheelSlipping;
 
