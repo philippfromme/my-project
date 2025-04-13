@@ -10,11 +10,6 @@ public class Main : MonoBehaviour
     private Label speedLabel;
     private Label slipAngleLabel;
 
-    private VisualElement wheelSlipStatusFrontLeft;
-    private VisualElement wheelSlipStatusFrontRight;
-    private VisualElement wheelSlipStatusBackLeft;
-    private VisualElement wheelSlipStatusBackRight;
-
     void Awake()
     {
         uiDocument = GetComponent<UIDocument>();
@@ -22,13 +17,8 @@ public class Main : MonoBehaviour
         speedLabel = uiDocument.rootVisualElement.Q<Label>("Speed");
         slipAngleLabel = uiDocument.rootVisualElement.Q<Label>("SlipAngle");
 
-        speedLabel.text = "Speed: 0 km/h";
-        slipAngleLabel.text = "Slip Angle: 0°";
-
-        wheelSlipStatusFrontLeft = uiDocument.rootVisualElement.Q<VisualElement>("FrontLeft");
-        wheelSlipStatusFrontRight = uiDocument.rootVisualElement.Q<VisualElement>("FrontRight");
-        wheelSlipStatusBackLeft = uiDocument.rootVisualElement.Q<VisualElement>("BackLeft");
-        wheelSlipStatusBackRight = uiDocument.rootVisualElement.Q<VisualElement>("BackRight");
+        speedLabel.text = "SPEED 0 km/h";
+        slipAngleLabel.text = "SLIP ANGLE 0°";
     }
 
     void Update()
@@ -38,47 +28,11 @@ public class Main : MonoBehaviour
 
     public void UpdateSpeed(int speed)
     {
-        speedLabel.text = $"Speed: {speed} km/h";
+        speedLabel.text = $"SPEED {speed} km/h";
     }
 
     public void UpdateSlipAngle(int slipAngle)
     {
-        slipAngleLabel.text = $"Slip Angle: {slipAngle}°";
-    }
-
-    public void UpdateWheelSlipStatus(WheelSlipStatus wheelSlipStatus)
-    {
-
-        if (wheelSlipStatus.frontRightWheelSlipping) {
-            wheelSlipStatusFrontRight.style.backgroundColor = Color.red;
-        }
-        else
-        {
-            wheelSlipStatusFrontRight.style.backgroundColor = Color.green;
-        }
-
-        if (wheelSlipStatus.frontLeftWheelSlipping) {
-            wheelSlipStatusFrontLeft.style.backgroundColor = Color.red;
-        }
-        else
-        {
-            wheelSlipStatusFrontLeft.style.backgroundColor = Color.green;
-        }
-
-        if (wheelSlipStatus.backRightWheelSlipping) {
-            wheelSlipStatusBackRight.style.backgroundColor = Color.red;
-        }
-        else
-        {
-            wheelSlipStatusBackRight.style.backgroundColor = Color.green;
-        }
-
-        if (wheelSlipStatus.backLeftWheelSlipping) {
-            wheelSlipStatusBackLeft.style.backgroundColor = Color.red;
-        }
-        else
-        {
-            wheelSlipStatusBackLeft.style.backgroundColor = Color.green;
-        }
+        slipAngleLabel.text = $"SLIP ANGLE {slipAngle}°";
     }
 }

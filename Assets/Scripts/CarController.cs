@@ -34,7 +34,7 @@ public class CarController : MonoBehaviour
     public float speed;
     public float speedKmh; // Speed in km/h
 
-    public float maxSpeed = 200f; // Maximum speed in km/h
+    public float maxSpeedKmh = 50f; // Maximum speed in km/h
     public float dragMultiplier = 0.5f; // Adjust drag near max speed
 
     public float drag;
@@ -187,14 +187,18 @@ public class CarController : MonoBehaviour
         OnSlipAngleUpdated?.Invoke(slipAngleInt); // Update slip angle event
 
         OnWheelSlipStatusUpdated?.Invoke(wheelSlipStatus); // Update wheel slip status event
+
+        Debug.Log($"GAS: {gasInput}, BRAKE: {brakeInput}, STEERING: {steeringInput}, SLIP ANGLE: {slipAngleInt}°");
     }
 
     void FixedUpdate() {
-        if (rb.velocity.magnitude > maxSpeed * 0.9f) { // Apply drag when near max speed
+        if (rb.velocity.magnitude * 3.6f > maxSpeedKmh) { // Apply drag when over max speed
             rb.drag = dragMultiplier;
         } else {
             rb.drag = drag; // Reset drag when under limit
         }
+
+        // Debug.Log($"Speed: {speedKmh} km/h, Drag: {rb.drag}");
     }
 
     void ApplyMotorTorque() {
@@ -215,9 +219,16 @@ public class CarController : MonoBehaviour
     void ApplySteering() {
         float steeringAngle = steeringInput * steeringCurve.Evaluate(speed);
 
-        if (speed > 1f) {
+        bool isMovingForward = Vector3.Dot(rb.velocity, transform.forward) > 0;
+
+        // Assist steering based on speed and slip angle
+        if (isMovingForward && speedKmh > 10f) {
+            Debug.Log("Steering Assist Active");
+
             steeringAngle += Vector3.SignedAngle(transform.forward, rb.velocity, transform.up) * steeringAssistFactor; // Adjust steering angle based on velocity direction
             steeringAngle = Mathf.Clamp(steeringAngle, -maxSteeringAngle, maxSteeringAngle); // Limit steering angle
+        } else {
+            Debug.Log("Steering Assist Inactive");
         }
 
         wheelColliders.frontLeftWheelCollider.steerAngle = steeringAngle;
@@ -227,22 +238,27 @@ public class CarController : MonoBehaviour
     void CheckInput() {
         gasInput = Input.GetAxis("Vertical");
         steeringInput = Input.GetAxis("Horizontal");
-        slipAngle = Vector3.Angle(transform.forward, rb.velocity - transform.forward);
 
-        if (slipAngle < 120f && gasInput < 0) {
-            brakeInput = Mathf.Abs(gasInput);
-            gasInput = 0;
-        } else {
-            brakeInput = 0;
-        }
+        bool isMovingForward = Vector3.Dot(rb.velocity, transform.forward) > 0;
 
-        // apply handbrake
-        if (Input.GetKey(KeyCode.Space)) {
+        // Handbrake logic
+        if (Input.GetKey(KeyCode.Space))
+        {
             brakeInput = 1f;
 
             gasInput = 0f;
-        } else {
-            brakeInput = 0f;
+        }
+        else if (gasInput < 0 && isMovingForward) // Reverse input while moving forward
+        {
+            brakeInput = Mathf.Abs(gasInput); // Apply braking proportional to reverse input
+        }
+        else if (gasInput > 0 && !isMovingForward) // Forward input while moving backward
+        {
+            brakeInput = Mathf.Abs(gasInput); // Apply braking proportional to forward input
+        }
+        else
+        {
+            brakeInput = 0f; // No braking needed if inputs match movement direction
         }
     }
 

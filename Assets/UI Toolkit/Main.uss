@@ -1,8 +1,9 @@
 .header {
     font-size: 40px;
-    -unity-font: url("project://database/Assets/UnityTechnologies/EffectExamples/Shared/Fonts/RobotoCondensed-Bold.ttf?fileID=12800000&guid=fae067962e5934395be31c8aba4a3455&type=3#RobotoCondensed-Bold");
+    -unity-font: url("project://database/Assets/Fonts/Chakra_Petch/ChakraPetch-Bold.ttf?fileID=12800000&guid=234f685f37f9b214cbc8e5000d5d21f5&type=3#ChakraPetch-Bold");
     -unity-text-outline-color: rgba(255, 255, 255, 0);
     -unity-text-outline-width: 0;
-    -unity-font-style: bold-and-italic;
+    -unity-font-style: bold;
     left: 20px;
+    -unity-font-definition: initial;
 }
