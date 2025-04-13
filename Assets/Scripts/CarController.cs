@@ -14,6 +14,8 @@ public class CarController : MonoBehaviour
 
     public GameObject wheelParticlePrefab;
 
+    public Transform centerOfMassTransform; // Center of mass transform
+
     public float gasInput;
     public float brakeInput;
     public float steeringInput;
@@ -47,6 +49,9 @@ public class CarController : MonoBehaviour
 
     public AnimationCurve steeringCurve;
 
+    [Header("Anti-Roll Bar")]
+    public float antiRollForce = 5000f; // Adjust this value
+
     // Events
     [System.Serializable]
     public class SpeedEvent : UnityEvent<int> { }
@@ -64,7 +69,13 @@ public class CarController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
 
-        // rb.centerOfMass = new Vector3(0f, -0.5f, 0f); // Adjust center of mass for better handling
+        if (centerOfMassTransform != null) {
+            rb.centerOfMass = centerOfMassTransform.localPosition; // Set center of mass to the transform's position
+        } else {
+            rb.ResetCenterOfMass(); // Reset to default center of mass
+            Debug.LogWarning("Center of Mass Transform not assigned. Using default center of mass.");
+        }
+
         drag = rb.drag; // Set initial drag
 
         InitWheelParticles();
@@ -210,6 +221,45 @@ public class CarController : MonoBehaviour
         }
 
         // Debug.Log($"Speed: {speedKmh} km/h, Drag: {rb.drag}");
+
+        ApplyAntiRollForce();
+    }
+
+    void ApplyAntiRollForce()
+    {
+        WheelHit hit;
+
+        bool frontLeftGrounded = wheelColliders.frontLeftWheelCollider.GetGroundHit(out hit);
+        bool frontRightGrounded = wheelColliders.frontRightWheelCollider.GetGroundHit(out hit);
+        bool backLeftGrounded = wheelColliders.backLeftWheelCollider.GetGroundHit(out hit);
+        bool backRightGrounded = wheelColliders.backRightWheelCollider.GetGroundHit(out hit);
+
+        if (!rb)
+        {
+            return; // Ensure rb is not null
+        }
+
+        if (frontLeftGrounded && frontRightGrounded)
+        {
+            float travelL = 1f - (-wheelColliders.frontLeftWheelCollider.transform.InverseTransformPoint(hit.point).y / wheelColliders.frontLeftWheelCollider.radius);
+            float travelR = 1f - (-wheelColliders.frontRightWheelCollider.transform.InverseTransformPoint(hit.point).y / wheelColliders.frontRightWheelCollider.radius);
+
+            float antiRollForceApplied = (travelL - travelR) * antiRollForce;
+
+            rb.AddForceAtPosition(wheelColliders.frontLeftWheelCollider.transform.up * -antiRollForceApplied, wheelColliders.frontLeftWheelCollider.transform.position);
+            rb.AddForceAtPosition(wheelColliders.frontRightWheelCollider.transform.up * antiRollForceApplied, wheelColliders.frontRightWheelCollider.transform.position);
+        }
+
+        if (backLeftGrounded && backRightGrounded)
+        {
+            float travelL = 1f - (-wheelColliders.backLeftWheelCollider.transform.InverseTransformPoint(hit.point).y / wheelColliders.backLeftWheelCollider.radius);
+            float travelR = 1f - (-wheelColliders.backRightWheelCollider.transform.InverseTransformPoint(hit.point).y / wheelColliders.backRightWheelCollider.radius);
+
+            float antiRollForceApplied = (travelL - travelR) * antiRollForce;
+
+            rb.AddForceAtPosition(wheelColliders.backLeftWheelCollider.transform.up * -antiRollForceApplied, wheelColliders.backLeftWheelCollider.transform.position);
+            rb.AddForceAtPosition(wheelColliders.backRightWheelCollider.transform.up * antiRollForceApplied, wheelColliders.backRightWheelCollider.transform.position);
+        }
     }
 
     void ApplyMotorTorque() {
