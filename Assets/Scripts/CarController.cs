@@ -188,7 +188,14 @@ public class CarController : MonoBehaviour
 
         OnWheelSlipStatusUpdated?.Invoke(wheelSlipStatus); // Update wheel slip status event
 
-        Debug.Log($"GAS: {gasInput}, BRAKE: {brakeInput}, STEERING: {steeringInput}, SLIP ANGLE: {slipAngleInt}°");
+        // Debug.Log($"GAS: {gasInput}, BRAKE: {brakeInput}, STEERING: {steeringInput}, SLIP ANGLE: {slipAngleInt}°");
+
+        float frontWheelRPM = (wheelColliders.frontLeftWheelCollider.rpm + wheelColliders.frontRightWheelCollider.rpm) / 2f;        
+        float rearWheelRPM = (wheelColliders.backLeftWheelCollider.rpm + wheelColliders.backRightWheelCollider.rpm) / 2f;
+
+        bool rearWheelsSlipping = wheelSlipStatus.backLeftWheelSlipping || wheelSlipStatus.backRightWheelSlipping;
+
+        Debug.Log($"Front Wheel RPM: {frontWheelRPM}, Rear Wheel RPM: {rearWheelRPM}, Rear Wheels Slipping: {rearWheelsSlipping}");
     }
 
     void FixedUpdate() {
@@ -217,7 +224,7 @@ public class CarController : MonoBehaviour
     }
 
     void ApplySteering() {
-        float steeringAngle = steeringInput * steeringCurve.Evaluate(speed);
+        float steerAngle = steeringInput * steeringCurve.Evaluate(speed);
 
         bool isMovingForward = Vector3.Dot(rb.velocity, transform.forward) > 0;
 
@@ -225,14 +232,14 @@ public class CarController : MonoBehaviour
         if (isMovingForward && speedKmh > 10f) {
             Debug.Log("Steering Assist Active");
 
-            steeringAngle += Vector3.SignedAngle(transform.forward, rb.velocity, transform.up) * steeringAssistFactor; // Adjust steering angle based on velocity direction
-            steeringAngle = Mathf.Clamp(steeringAngle, -maxSteeringAngle, maxSteeringAngle); // Limit steering angle
+            steerAngle += Vector3.SignedAngle(transform.forward, rb.velocity, transform.up) * steeringAssistFactor; // Adjust steering angle based on velocity direction
+            steerAngle = Mathf.Clamp(steerAngle, -maxSteeringAngle, maxSteeringAngle); // Limit steering angle
         } else {
             Debug.Log("Steering Assist Inactive");
         }
 
-        wheelColliders.frontLeftWheelCollider.steerAngle = steeringAngle;
-        wheelColliders.frontRightWheelCollider.steerAngle = steeringAngle;
+        wheelColliders.frontLeftWheelCollider.steerAngle = steerAngle;
+        wheelColliders.frontRightWheelCollider.steerAngle = steerAngle;
     }
 
     void CheckInput() {

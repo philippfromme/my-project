@@ -9891,17 +9891,17 @@ WheelCollider:
   m_Mass: 20
   m_WheelDampingRate: 0.25
   m_ForwardFriction:
-    m_ExtremumSlip: 0.4
-    m_ExtremumValue: 1
-    m_AsymptoteSlip: 0.8
-    m_AsymptoteValue: 0.5
-    m_Stiffness: 1.5
+    m_ExtremumSlip: 1
+    m_ExtremumValue: 0.8
+    m_AsymptoteSlip: 2
+    m_AsymptoteValue: 0.6
+    m_Stiffness: 1
   m_SidewaysFriction:
-    m_ExtremumSlip: 0.2
-    m_ExtremumValue: 0.4
-    m_AsymptoteSlip: 0.2
-    m_AsymptoteValue: 0.4
-    m_Stiffness: 0.75
+    m_ExtremumSlip: 1.2
+    m_ExtremumValue: 0.7
+    m_AsymptoteSlip: 2.2
+    m_AsymptoteValue: 0.5
+    m_Stiffness: 1
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -48800,16 +48800,16 @@ WheelCollider:
   m_Mass: 20
   m_WheelDampingRate: 0.25
   m_ForwardFriction:
-    m_ExtremumSlip: 0.4
-    m_ExtremumValue: 1
-    m_AsymptoteSlip: 0.8
-    m_AsymptoteValue: 0.5
-    m_Stiffness: 1.5
+    m_ExtremumSlip: 0.8
+    m_ExtremumValue: 1.2
+    m_AsymptoteSlip: 1.5
+    m_AsymptoteValue: 1
+    m_Stiffness: 1
   m_SidewaysFriction:
-    m_ExtremumSlip: 0.2
-    m_ExtremumValue: 1
-    m_AsymptoteSlip: 0.5
-    m_AsymptoteValue: 0.75
+    m_ExtremumSlip: 0.7
+    m_ExtremumValue: 1.1
+    m_AsymptoteSlip: 1.4
+    m_AsymptoteValue: 0.9
     m_Stiffness: 1
   m_IncludeLayers:
     serializedVersion: 2
@@ -64529,17 +64529,17 @@ WheelCollider:
   m_Mass: 20
   m_WheelDampingRate: 0.25
   m_ForwardFriction:
-    m_ExtremumSlip: 0.4
-    m_ExtremumValue: 1
-    m_AsymptoteSlip: 0.8
-    m_AsymptoteValue: 0.5
-    m_Stiffness: 1.5
+    m_ExtremumSlip: 1
+    m_ExtremumValue: 0.8
+    m_AsymptoteSlip: 2
+    m_AsymptoteValue: 0.6
+    m_Stiffness: 1
   m_SidewaysFriction:
-    m_ExtremumSlip: 0.2
-    m_ExtremumValue: 0.4
-    m_AsymptoteSlip: 0.2
-    m_AsymptoteValue: 0.4
-    m_Stiffness: 0.75
+    m_ExtremumSlip: 1.2
+    m_ExtremumValue: 0.7
+    m_AsymptoteSlip: 2.2
+    m_AsymptoteValue: 0.5
+    m_Stiffness: 1
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -66020,7 +66020,7 @@ MonoBehaviour:
   gasInput: 0
   brakeInput: 0
   steeringInput: 0
-  motorTorque: 2000
+  motorTorque: 1000
   brakeTorque: 50000
   maxSteeringAngle: 60
   brakeDistribution: 0.7
@@ -66118,7 +66118,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1685069730}
   serializedVersion: 4
-  m_Mass: 500
+  m_Mass: 1100
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -81469,16 +81469,16 @@ WheelCollider:
   m_Mass: 20
   m_WheelDampingRate: 0.25
   m_ForwardFriction:
-    m_ExtremumSlip: 0.4
-    m_ExtremumValue: 1
-    m_AsymptoteSlip: 0.8
-    m_AsymptoteValue: 0.5
-    m_Stiffness: 1.5
+    m_ExtremumSlip: 0.8
+    m_ExtremumValue: 1.2
+    m_AsymptoteSlip: 1.5
+    m_AsymptoteValue: 1
+    m_Stiffness: 1
   m_SidewaysFriction:
-    m_ExtremumSlip: 0.2
-    m_ExtremumValue: 1
-    m_AsymptoteSlip: 0.5
-    m_AsymptoteValue: 0.75
+    m_ExtremumSlip: 0.7
+    m_ExtremumValue: 1.1
+    m_AsymptoteSlip: 1.4
+    m_AsymptoteValue: 0.9
     m_Stiffness: 1
   m_IncludeLayers:
     serializedVersion: 2
