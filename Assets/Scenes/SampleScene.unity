@@ -2771,6 +2771,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  antiRollForce: 5000
   OnSpeedUpdated:
     m_PersistentCalls:
       m_Calls: []
@@ -38707,11 +38708,11 @@ PrefabInstance:
     - target: {fileID: -6652725513331149018, guid: 7363647d9cd42304da738c9823020f17, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 7320bb81a3631604f86192d3dd70cf35, type: 2}
+      objectReference: {fileID: 2100000, guid: 8621eca9242a0b34f96dc94ec913d53e, type: 2}
     - target: {fileID: -4657646125753921936, guid: 7363647d9cd42304da738c9823020f17, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 7320bb81a3631604f86192d3dd70cf35, type: 2}
+      objectReference: {fileID: 2100000, guid: 8621eca9242a0b34f96dc94ec913d53e, type: 2}
     - target: {fileID: 919132149155446097, guid: 7363647d9cd42304da738c9823020f17, type: 3}
       propertyPath: m_Name
       value: Cybertruck
@@ -38723,15 +38724,15 @@ PrefabInstance:
     - target: {fileID: 1981512342160824430, guid: 7363647d9cd42304da738c9823020f17, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 7320bb81a3631604f86192d3dd70cf35, type: 2}
+      objectReference: {fileID: 2100000, guid: 8621eca9242a0b34f96dc94ec913d53e, type: 2}
     - target: {fileID: 3272217150970315195, guid: 7363647d9cd42304da738c9823020f17, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 7320bb81a3631604f86192d3dd70cf35, type: 2}
+      objectReference: {fileID: 2100000, guid: 8621eca9242a0b34f96dc94ec913d53e, type: 2}
     - target: {fileID: 8432023918310153089, guid: 7363647d9cd42304da738c9823020f17, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 7320bb81a3631604f86192d3dd70cf35, type: 2}
+      objectReference: {fileID: 2100000, guid: 8621eca9242a0b34f96dc94ec913d53e, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -54228,16 +54229,28 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 73ffbc06802a247cfb1b26f4ee67eba8, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 36
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 73ffbc06802a247cfb1b26f4ee67eba8, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 36
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 73ffbc06802a247cfb1b26f4ee67eba8, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 36
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 73ffbc06802a247cfb1b26f4ee67eba8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.67
+      value: -42.2
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 73ffbc06802a247cfb1b26f4ee67eba8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.390625
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 73ffbc06802a247cfb1b26f4ee67eba8, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.25
+      value: 96.4
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 73ffbc06802a247cfb1b26f4ee67eba8, type: 3}
       propertyPath: m_LocalRotation.w
@@ -66375,7 +66388,7 @@ MonoBehaviour:
   steeringInput: 0
   motorTorque: 1000
   brakeTorque: 50000
-  maxSteeringAngle: 60
+  maxSteeringAngle: 45
   brakeDistribution: 0.7
   steeringAssistFactor: 0.75
   slipAngle: 0
@@ -66412,6 +66425,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  antiRollForce: 10000
   OnSpeedUpdated:
     m_PersistentCalls:
       m_Calls:
@@ -86997,7 +87011,7 @@ SceneRoots:
   - {fileID: 709472175}
   - {fileID: 1333890792}
   - {fileID: 1938078912}
-  - {fileID: 1393376044}
   - {fileID: 1827822390}
   - {fileID: 890172405}
   - {fileID: 270402217}
+  - {fileID: 1393376044}

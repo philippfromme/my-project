@@ -227,6 +227,8 @@ public class CarController : MonoBehaviour
 
     void ApplyAntiRollForce()
     {
+        // TODO: this isn't working as expected, need to debug
+
         WheelHit hit;
 
         bool frontLeftGrounded = wheelColliders.frontLeftWheelCollider.GetGroundHit(out hit);
@@ -246,6 +248,8 @@ public class CarController : MonoBehaviour
 
             float antiRollForceApplied = (travelL - travelR) * antiRollForce;
 
+            Debug.Log($"Front Anti-Roll Force Applied: {antiRollForceApplied}");
+
             rb.AddForceAtPosition(wheelColliders.frontLeftWheelCollider.transform.up * -antiRollForceApplied, wheelColliders.frontLeftWheelCollider.transform.position);
             rb.AddForceAtPosition(wheelColliders.frontRightWheelCollider.transform.up * antiRollForceApplied, wheelColliders.frontRightWheelCollider.transform.position);
         }
@@ -256,6 +260,8 @@ public class CarController : MonoBehaviour
             float travelR = 1f - (-wheelColliders.backRightWheelCollider.transform.InverseTransformPoint(hit.point).y / wheelColliders.backRightWheelCollider.radius);
 
             float antiRollForceApplied = (travelL - travelR) * antiRollForce;
+
+            Debug.Log($"Rear Anti-Roll Force Applied: {antiRollForceApplied}");
 
             rb.AddForceAtPosition(wheelColliders.backLeftWheelCollider.transform.up * -antiRollForceApplied, wheelColliders.backLeftWheelCollider.transform.position);
             rb.AddForceAtPosition(wheelColliders.backRightWheelCollider.transform.up * antiRollForceApplied, wheelColliders.backRightWheelCollider.transform.position);
