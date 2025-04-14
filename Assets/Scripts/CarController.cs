@@ -47,6 +47,8 @@ public class CarController : MonoBehaviour
 
     public float slipThreshold = 0.1f; // Adjust this value to control the slip threshold for particle effects
 
+    public float antiRollFactor = 1f; // Adjust this value to control the anti-roll bar effect
+
     public AnimationCurve steeringCurve;
 
     [Header("Anti-Roll Bar")]
@@ -222,13 +224,11 @@ public class CarController : MonoBehaviour
 
         // Debug.Log($"Speed: {speedKmh} km/h, Drag: {rb.drag}");
 
-        ApplyAntiRollForce();
+        ApplyAntiRoll();
     }
 
-    void ApplyAntiRollForce()
+    void ApplyAntiRoll()
     {
-        // TODO: this isn't working as expected, need to debug
-
         WheelHit hit;
 
         bool frontLeftGrounded = wheelColliders.frontLeftWheelCollider.GetGroundHit(out hit);
@@ -241,38 +241,23 @@ public class CarController : MonoBehaviour
             return; // Ensure rb is not null
         }
 
-        if (frontLeftGrounded && frontRightGrounded)
+        // if any of the wheels are not grounded, move the center of mass to the ground
+        if (!frontLeftGrounded || !frontRightGrounded || !backLeftGrounded || !backRightGrounded)
         {
-            float travelL = 1f - (-wheelColliders.frontLeftWheelCollider.transform.InverseTransformPoint(hit.point).y / wheelColliders.frontLeftWheelCollider.radius);
-            float travelR = 1f - (-wheelColliders.frontRightWheelCollider.transform.InverseTransformPoint(hit.point).y / wheelColliders.frontRightWheelCollider.radius);
+            Debug.Log("ANTI-ROLL BAR ACTIVE");
 
-            float antiRollForceApplied = (travelL - travelR) * antiRollForce;
-
-            Debug.Log($"Front Anti-Roll Force Applied: {antiRollForceApplied}");
-
-            rb.AddForceAtPosition(wheelColliders.frontLeftWheelCollider.transform.up * -antiRollForceApplied, wheelColliders.frontLeftWheelCollider.transform.position);
-            rb.AddForceAtPosition(wheelColliders.frontRightWheelCollider.transform.up * antiRollForceApplied, wheelColliders.frontRightWheelCollider.transform.position);
-        }
-
-        if (backLeftGrounded && backRightGrounded)
+            rb.centerOfMass = centerOfMassTransform.localPosition + new Vector3(0, -antiRollFactor, 0); // Move center of mass downwards
+        } else
         {
-            float travelL = 1f - (-wheelColliders.backLeftWheelCollider.transform.InverseTransformPoint(hit.point).y / wheelColliders.backLeftWheelCollider.radius);
-            float travelR = 1f - (-wheelColliders.backRightWheelCollider.transform.InverseTransformPoint(hit.point).y / wheelColliders.backRightWheelCollider.radius);
-
-            float antiRollForceApplied = (travelL - travelR) * antiRollForce;
-
-            Debug.Log($"Rear Anti-Roll Force Applied: {antiRollForceApplied}");
-
-            rb.AddForceAtPosition(wheelColliders.backLeftWheelCollider.transform.up * -antiRollForceApplied, wheelColliders.backLeftWheelCollider.transform.position);
-            rb.AddForceAtPosition(wheelColliders.backRightWheelCollider.transform.up * antiRollForceApplied, wheelColliders.backRightWheelCollider.transform.position);
+            rb.centerOfMass = centerOfMassTransform.localPosition; // Reset to default center of mass
         }
     }
 
     void ApplyMotorTorque() {
-        float motorTorque = gasInput * this.motorTorque;
+        float appliedMotorTorque = gasInput * motorTorque;
 
-        wheelColliders.backLeftWheelCollider.motorTorque = motorTorque;
-        wheelColliders.backRightWheelCollider.motorTorque = motorTorque;
+        wheelColliders.backLeftWheelCollider.motorTorque = appliedMotorTorque;
+        wheelColliders.backRightWheelCollider.motorTorque = appliedMotorTorque;
     }
 
     void ApplyBrake() {
